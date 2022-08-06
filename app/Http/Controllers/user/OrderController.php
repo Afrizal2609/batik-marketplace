@@ -140,21 +140,8 @@ class OrderController extends Controller
         $cek_invoice = DB::table('order')->where('invoice', $request->invoice)->count();
         if ($cek_invoice < 1) {
             $userid = \Auth::user()->id;
-            //jika pelanggan memilih metode cod maka insert data yang ini
-            if ($request->metode_pembayaran == 'cod') {
-                Order::create([
-                    'invoice' => $request->invoice,
-                    'user_id' => $userid,
-                    'subtotal' => $request->subtotal,
-                    'status_order_id' => 1,
-                    'metode_pembayaran' => $request->metode_pembayaran,
-                    'ongkir' => $request->ongkir,
-                    'biaya_cod' => 10000,
-                    'no_hp' => $request->no_hp,
-                    'pesan' => $request->pesan
-                ]);
-            } else {
-                //jika memilih transfer maka data yang ini
+            //jika pelanggan memilih metode trf maka insert data yang ini
+            if ($request->metode_pembayaran == 'trf') {
                 Order::create([
                     'invoice' => $request->invoice,
                     'user_id' => $userid,

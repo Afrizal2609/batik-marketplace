@@ -76,9 +76,9 @@
                   <label for="">Pilih Metode Pembayaran</label>
                     <select name="metode_pembayaran" id="" class="form-control">
                       <option value="trf">Transfer</option>
-                      <option value="cod">Cod</option>
+                      {{-- <option value="cod">Cod</option> --}}
                     </select>
-                    <small>Jika memilih cod maka akan dikenakan biaya tambahan sebesar Rp. 10.000,00</small>
+                    {{-- <small>Jika memilih cod maka akan dikenakan biaya tambahan sebesar Rp. 10.000,00</small> --}}
                   </div>
                  
 

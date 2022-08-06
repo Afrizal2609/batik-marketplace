@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.0.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 06, 2022 at 02:28 PM
--- Server version: 10.4.21-MariaDB
--- PHP Version: 8.0.12
+-- Waktu pembuatan: 04 Agu 2022 pada 02.33
+-- Versi server: 10.4.11-MariaDB
+-- Versi PHP: 7.4.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -24,7 +25,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `alamat`
+-- Struktur dari tabel `alamat`
 --
 
 CREATE TABLE `alamat` (
@@ -38,7 +39,7 @@ CREATE TABLE `alamat` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `alamat`
+-- Dumping data untuk tabel `alamat`
 --
 
 INSERT INTO `alamat` (`id`, `cities_id`, `detail`, `user_id`, `kode_pos`, `created_at`, `updated_at`) VALUES
@@ -46,14 +47,12 @@ INSERT INTO `alamat` (`id`, `cities_id`, `detail`, `user_id`, `kode_pos`, `creat
 (2, 64, 'Jln. Basmol Raya No. 836, Payakumbuh 37432, Riau', 7, 0, '2022-07-15 00:02:14', '2022-07-15 00:02:14'),
 (3, 345, 'Ds. Mojoasri Rt 08 Rw 01 Kec. Mojogedang Kab. Mojokerto  Jl. Asri indah No.2 Mojolayu', 9, 0, '2022-07-31 22:47:56', '2022-07-31 22:47:56'),
 (4, 323, 'Desa Bulu kerto no.23 Jl. Kemenangan', 10, 0, '2022-07-31 23:26:31', '2022-07-31 23:26:31'),
-(5, 345, 'Desa Bulu kerto no.23 Jl. Kemenangan', 11, 0, '2022-07-31 23:35:13', '2022-07-31 23:35:13'),
-(6, 335, 'Jl.Rutas, RT.11/RW03, Desa Kayu Bawang, Kecamatan Barabai, Kabupaten Hulu Sungai Tengah, Kalimantan Selatan, 71315', 1, 0, '2022-08-05 15:25:08', '2022-08-05 15:25:08'),
-(7, 103, 'ugkugkjgkgkgkjgkjgkjgkjgkjg', 12, 0, '2022-08-05 15:51:35', '2022-08-05 15:57:35');
+(5, 345, 'Desa Bulu kerto no.23 Jl. Kemenangan', 11, 0, '2022-07-31 23:35:13', '2022-07-31 23:35:13');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `alamat_toko`
+-- Struktur dari tabel `alamat_toko`
 --
 
 CREATE TABLE `alamat_toko` (
@@ -65,7 +64,7 @@ CREATE TABLE `alamat_toko` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `alamat_toko`
+-- Dumping data untuk tabel `alamat_toko`
 --
 
 INSERT INTO `alamat_toko` (`id`, `city_id`, `detail`, `created_at`, `updated_at`) VALUES
@@ -74,7 +73,7 @@ INSERT INTO `alamat_toko` (`id`, `city_id`, `detail`, `created_at`, `updated_at`
 -- --------------------------------------------------------
 
 --
--- Table structure for table `categories`
+-- Struktur dari tabel `categories`
 --
 
 CREATE TABLE `categories` (
@@ -85,7 +84,7 @@ CREATE TABLE `categories` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `categories`
+-- Dumping data untuk tabel `categories`
 --
 
 INSERT INTO `categories` (`id`, `name`, `created_at`, `updated_at`) VALUES
@@ -99,7 +98,7 @@ INSERT INTO `categories` (`id`, `name`, `created_at`, `updated_at`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `cekongkir`
+-- Struktur dari tabel `cekongkir`
 --
 
 CREATE TABLE `cekongkir` (
@@ -116,7 +115,7 @@ CREATE TABLE `cekongkir` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `cities`
+-- Struktur dari tabel `cities`
 --
 
 CREATE TABLE `cities` (
@@ -128,7 +127,7 @@ CREATE TABLE `cities` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `cities`
+-- Dumping data untuk tabel `cities`
 --
 
 INSERT INTO `cities` (`city_id`, `province_id`, `nama_cities`, `created_at`, `updated_at`) VALUES
@@ -207,6 +206,7 @@ INSERT INTO `cities` (`city_id`, `province_id`, `nama_cities`, `created_at`, `up
 (325, 15, 'Madiun', NULL, NULL),
 (332, 12, 'Cirebon', NULL, NULL),
 (333, 13, 'Surakarta', NULL, NULL),
+(335, 15, 'Malang', NULL, NULL),
 (342, 12, 'Depok', NULL, NULL),
 (343, 13, 'Tegal', NULL, NULL),
 (345, 15, 'Mojokerto', NULL, NULL),
@@ -217,7 +217,6 @@ INSERT INTO `cities` (`city_id`, `province_id`, `nama_cities`, `created_at`, `up
 (372, 12, 'Banjar', NULL, NULL),
 (375, 15, 'Surabaya', NULL, NULL),
 (385, 15, 'Magetan', NULL, NULL),
-(395, 15, 'Malang', NULL, NULL),
 (502, 18, 'Mataram', NULL, NULL),
 (601, 20, 'Singkawang', NULL, NULL),
 (603, 22, 'Banjarmasin', NULL, NULL),
@@ -235,7 +234,7 @@ INSERT INTO `cities` (`city_id`, `province_id`, `nama_cities`, `created_at`, `up
 -- --------------------------------------------------------
 
 --
--- Table structure for table `couriers`
+-- Struktur dari tabel `couriers`
 --
 
 CREATE TABLE `couriers` (
@@ -247,7 +246,7 @@ CREATE TABLE `couriers` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `couriers`
+-- Dumping data untuk tabel `couriers`
 --
 
 INSERT INTO `couriers` (`id`, `code`, `nama_couriers`, `created_at`, `updated_at`) VALUES
@@ -258,7 +257,7 @@ INSERT INTO `couriers` (`id`, `code`, `nama_couriers`, `created_at`, `updated_at
 -- --------------------------------------------------------
 
 --
--- Table structure for table `detail_order`
+-- Struktur dari tabel `detail_order`
 --
 
 CREATE TABLE `detail_order` (
@@ -271,7 +270,7 @@ CREATE TABLE `detail_order` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `detail_order`
+-- Dumping data untuk tabel `detail_order`
 --
 
 INSERT INTO `detail_order` (`id`, `order_id`, `product_id`, `qty`, `created_at`, `updated_at`) VALUES
@@ -325,13 +324,12 @@ INSERT INTO `detail_order` (`id`, `order_id`, `product_id`, `qty`, `created_at`,
 (48, 43, 3, 1, '2022-07-17 17:02:35', '2022-07-17 17:02:35'),
 (49, 44, 1, 1, '2022-07-31 22:48:51', '2022-07-31 22:48:51'),
 (50, 45, 2, 1, '2022-07-31 23:36:37', '2022-07-31 23:36:37'),
-(51, 46, 3, 1, '2022-08-04 00:17:38', '2022-08-04 00:17:38'),
-(52, 47, 2, 1, '2022-08-05 16:00:05', '2022-08-05 16:00:05');
+(51, 46, 3, 1, '2022-08-04 00:17:38', '2022-08-04 00:17:38');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `failed_jobs`
+-- Struktur dari tabel `failed_jobs`
 --
 
 CREATE TABLE `failed_jobs` (
@@ -346,7 +344,7 @@ CREATE TABLE `failed_jobs` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `keranjang`
+-- Struktur dari tabel `keranjang`
 --
 
 CREATE TABLE `keranjang` (
@@ -359,7 +357,7 @@ CREATE TABLE `keranjang` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `keranjang`
+-- Dumping data untuk tabel `keranjang`
 --
 
 INSERT INTO `keranjang` (`id`, `user_id`, `products_id`, `qty`, `created_at`, `updated_at`) VALUES
@@ -369,7 +367,7 @@ INSERT INTO `keranjang` (`id`, `user_id`, `products_id`, `qty`, `created_at`, `u
 -- --------------------------------------------------------
 
 --
--- Table structure for table `migrations`
+-- Struktur dari tabel `migrations`
 --
 
 CREATE TABLE `migrations` (
@@ -379,7 +377,7 @@ CREATE TABLE `migrations` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `migrations`
+-- Dumping data untuk tabel `migrations`
 --
 
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
@@ -414,7 +412,7 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `order`
+-- Struktur dari tabel `order`
 --
 
 CREATE TABLE `order` (
@@ -431,23 +429,22 @@ CREATE TABLE `order` (
   `biaya_cod` int(11) NOT NULL,
   `no_hp` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `bukti_pembayaran` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `pesan` text COLLATE utf8mb4_unicode_ci DEFAULT NULL
+  `pesan` text COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `order`
+-- Dumping data untuk tabel `order`
 --
 
 INSERT INTO `order` (`id`, `invoice`, `user_id`, `subtotal`, `no_resi`, `status_order_id`, `metode_pembayaran`, `ongkir`, `created_at`, `updated_at`, `biaya_cod`, `no_hp`, `bukti_pembayaran`, `pesan`) VALUES
 (44, 'ALV202208010548', 9, 513000, 'V345678', 6, 'trf', 63000, '2022-07-31 22:48:50', '2022-07-31 23:11:02', 0, '081828364728', 'buktibayar/NRwv07cUL9yfTLkzWAlTffhSWxqHMjyOxRsdVDAf.jpg', 'Warna Biru Langit'),
 (45, 'ALV202208010635', 11, 233000, '120040042107018', 6, 'trf', 63000, '2022-07-31 23:36:37', '2022-08-01 00:06:22', 0, '0853657899', 'buktibayar/EbkUW8vla31JQuNA3EKlV9vGXfZVOheu70tx0d2w.jpg', 'Warna Merah hati'),
-(46, 'ALV202208040717', 9, 238000, 'V56899006', 6, 'trf', 63000, '2022-08-04 00:17:36', '2022-08-04 00:29:48', 0, '087657654378996', 'buktibayar/guiACKqbVyTdLy6JoluPFg2D480zsD5w2sHyU0hy.png', 'warna biru laut'),
-(47, 'ALV202208051057', 12, 209000, NULL, 1, 'cod', 39000, '2022-08-05 16:00:05', '2022-08-05 16:00:05', 10000, '02302032083', NULL, NULL);
+(46, 'ALV202208040717', 9, 238000, 'V56899006', 6, 'trf', 63000, '2022-08-04 00:17:36', '2022-08-04 00:29:48', 0, '087657654378996', 'buktibayar/guiACKqbVyTdLy6JoluPFg2D480zsD5w2sHyU0hy.png', 'warna biru laut');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `password_resets`
+-- Struktur dari tabel `password_resets`
 --
 
 CREATE TABLE `password_resets` (
@@ -459,7 +456,7 @@ CREATE TABLE `password_resets` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `posts`
+-- Struktur dari tabel `posts`
 --
 
 CREATE TABLE `posts` (
@@ -475,7 +472,7 @@ CREATE TABLE `posts` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `products`
+-- Struktur dari tabel `products`
 --
 
 CREATE TABLE `products` (
@@ -493,7 +490,7 @@ CREATE TABLE `products` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `products`
+-- Dumping data untuk tabel `products`
 --
 
 INSERT INTO `products` (`id`, `name`, `description`, `image`, `price`, `weigth`, `categories_id`, `created_at`, `updated_at`, `stok`, `pengrajin_id`) VALUES
@@ -546,7 +543,7 @@ INSERT INTO `products` (`id`, `name`, `description`, `image`, `price`, `weigth`,
 -- --------------------------------------------------------
 
 --
--- Table structure for table `provinces`
+-- Struktur dari tabel `provinces`
 --
 
 CREATE TABLE `provinces` (
@@ -557,7 +554,7 @@ CREATE TABLE `provinces` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `provinces`
+-- Dumping data untuk tabel `provinces`
 --
 
 INSERT INTO `provinces` (`province_id`, `nama_province`, `created_at`, `updated_at`) VALUES
@@ -599,7 +596,7 @@ INSERT INTO `provinces` (`province_id`, `nama_province`, `created_at`, `updated_
 -- --------------------------------------------------------
 
 --
--- Table structure for table `rekening`
+-- Struktur dari tabel `rekening`
 --
 
 CREATE TABLE `rekening` (
@@ -612,7 +609,7 @@ CREATE TABLE `rekening` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `rekening`
+-- Dumping data untuk tabel `rekening`
 --
 
 INSERT INTO `rekening` (`id`, `bank_name`, `atas_nama`, `no_rekening`, `created_at`, `updated_at`) VALUES
@@ -621,7 +618,7 @@ INSERT INTO `rekening` (`id`, `bank_name`, `atas_nama`, `no_rekening`, `created_
 -- --------------------------------------------------------
 
 --
--- Table structure for table `response_review`
+-- Struktur dari tabel `response_review`
 --
 
 CREATE TABLE `response_review` (
@@ -634,7 +631,7 @@ CREATE TABLE `response_review` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `response_review`
+-- Dumping data untuk tabel `response_review`
 --
 
 INSERT INTO `response_review` (`id`, `tanggapan`, `review_id`, `user_id`, `created_at`, `updated_at`) VALUES
@@ -643,7 +640,7 @@ INSERT INTO `response_review` (`id`, `tanggapan`, `review_id`, `user_id`, `creat
 -- --------------------------------------------------------
 
 --
--- Table structure for table `reviews`
+-- Struktur dari tabel `reviews`
 --
 
 CREATE TABLE `reviews` (
@@ -657,7 +654,7 @@ CREATE TABLE `reviews` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `reviews`
+-- Dumping data untuk tabel `reviews`
 --
 
 INSERT INTO `reviews` (`id`, `star`, `review`, `product_id`, `order_id`, `created_at`, `updated_at`) VALUES
@@ -668,7 +665,7 @@ INSERT INTO `reviews` (`id`, `star`, `review`, `product_id`, `order_id`, `create
 -- --------------------------------------------------------
 
 --
--- Table structure for table `status_order`
+-- Struktur dari tabel `status_order`
 --
 
 CREATE TABLE `status_order` (
@@ -679,7 +676,7 @@ CREATE TABLE `status_order` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `status_order`
+-- Dumping data untuk tabel `status_order`
 --
 
 INSERT INTO `status_order` (`id`, `name`, `created_at`, `updated_at`) VALUES
@@ -694,7 +691,7 @@ INSERT INTO `status_order` (`id`, `name`, `created_at`, `updated_at`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `testimony_customers`
+-- Struktur dari tabel `testimony_customers`
 --
 
 CREATE TABLE `testimony_customers` (
@@ -710,7 +707,7 @@ CREATE TABLE `testimony_customers` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `users`
+-- Struktur dari tabel `users`
 --
 
 CREATE TABLE `users` (
@@ -726,7 +723,7 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `users`
+-- Dumping data untuk tabel `users`
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `roles`) VALUES
@@ -735,15 +732,14 @@ INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `re
 (3, 'pengrajin', 'pengrajin@gmail.com', NULL, '$2y$10$.ZWQZesC3351OtOur4hBVeRObOwS7fKMQmO1tXNcEA09fAN3JXJWC', NULL, '2022-07-06 22:55:56', '2022-07-06 22:55:56', 'Pengrajin'),
 (8, 'Pengrajin B', 'pengrajin_b@gmail.com', NULL, '$2y$10$.ZWQZesC3351OtOur4hBVeRObOwS7fKMQmO1tXNcEA09fAN3JXJWC', NULL, '2022-07-19 19:06:07', '2022-07-19 19:06:07', 'Pengrajin'),
 (9, 'Ana Subekti', 'ana@gmail.com', NULL, '$2y$10$/YgUvbO5rntvhkPBPUxCy.ebLPRwXDd8z7UtxYWBg6UJvviCSGmKO', NULL, '2022-07-31 22:46:41', '2022-07-31 22:46:41', 'Customer'),
-(11, 'Yusuf Ahmad', 'yusuf@gmail.com', NULL, '$2y$10$2zgrWSZZtlsaj7UuUbOJHOaL5eEtpPsgUm275IgsSJEpkjd4SxP9e', NULL, '2022-07-31 23:33:29', '2022-07-31 23:33:29', 'Customer'),
-(12, 'Muhammad Afrizal Miqdad', 'afrizal.bbm123@gmail.com', NULL, '$2y$10$Hx9r4joBSmEM60U8Pydy8eCG/v9t4cK/jAVmg0RIvjmkFPxelQ8wq', NULL, '2022-08-05 15:50:50', '2022-08-05 15:50:50', 'Customer');
+(11, 'Yusuf Ahmad', 'yusuf@gmail.com', NULL, '$2y$10$2zgrWSZZtlsaj7UuUbOJHOaL5eEtpPsgUm275IgsSJEpkjd4SxP9e', NULL, '2022-07-31 23:33:29', '2022-07-31 23:33:29', 'Customer');
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `alamat`
+-- Indeks untuk tabel `alamat`
 --
 ALTER TABLE `alamat`
   ADD PRIMARY KEY (`id`),
@@ -751,100 +747,100 @@ ALTER TABLE `alamat`
   ADD KEY `alamat_user_id_index` (`user_id`);
 
 --
--- Indexes for table `alamat_toko`
+-- Indeks untuk tabel `alamat_toko`
 --
 ALTER TABLE `alamat_toko`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `categories`
+-- Indeks untuk tabel `categories`
 --
 ALTER TABLE `categories`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `cekongkir`
+-- Indeks untuk tabel `cekongkir`
 --
 ALTER TABLE `cekongkir`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `cities`
+-- Indeks untuk tabel `cities`
 --
 ALTER TABLE `cities`
   ADD PRIMARY KEY (`city_id`),
   ADD KEY `cities_province_id_foreign` (`province_id`);
 
 --
--- Indexes for table `couriers`
+-- Indeks untuk tabel `couriers`
 --
 ALTER TABLE `couriers`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `detail_order`
+-- Indeks untuk tabel `detail_order`
 --
 ALTER TABLE `detail_order`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `failed_jobs`
+-- Indeks untuk tabel `failed_jobs`
 --
 ALTER TABLE `failed_jobs`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `keranjang`
+-- Indeks untuk tabel `keranjang`
 --
 ALTER TABLE `keranjang`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `migrations`
+-- Indeks untuk tabel `migrations`
 --
 ALTER TABLE `migrations`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `order`
+-- Indeks untuk tabel `order`
 --
 ALTER TABLE `order`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `password_resets`
+-- Indeks untuk tabel `password_resets`
 --
 ALTER TABLE `password_resets`
   ADD KEY `password_resets_email_index` (`email`);
 
 --
--- Indexes for table `posts`
+-- Indeks untuk tabel `posts`
 --
 ALTER TABLE `posts`
   ADD PRIMARY KEY (`id`),
   ADD KEY `posts_customer_id_index` (`customer_id`);
 
 --
--- Indexes for table `products`
+-- Indeks untuk tabel `products`
 --
 ALTER TABLE `products`
   ADD PRIMARY KEY (`id`),
   ADD KEY `products_pengrajin_id_foreign` (`pengrajin_id`);
 
 --
--- Indexes for table `provinces`
+-- Indeks untuk tabel `provinces`
 --
 ALTER TABLE `provinces`
   ADD PRIMARY KEY (`province_id`);
 
 --
--- Indexes for table `rekening`
+-- Indeks untuk tabel `rekening`
 --
 ALTER TABLE `rekening`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `response_review`
+-- Indeks untuk tabel `response_review`
 --
 ALTER TABLE `response_review`
   ADD PRIMARY KEY (`id`),
@@ -852,7 +848,7 @@ ALTER TABLE `response_review`
   ADD KEY `response_review_user_id_foreign` (`user_id`);
 
 --
--- Indexes for table `reviews`
+-- Indeks untuk tabel `reviews`
 --
 ALTER TABLE `reviews`
   ADD PRIMARY KEY (`id`),
@@ -860,174 +856,174 @@ ALTER TABLE `reviews`
   ADD KEY `reviews_order_id_foreign` (`order_id`);
 
 --
--- Indexes for table `status_order`
+-- Indeks untuk tabel `status_order`
 --
 ALTER TABLE `status_order`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `testimony_customers`
+-- Indeks untuk tabel `testimony_customers`
 --
 ALTER TABLE `testimony_customers`
   ADD PRIMARY KEY (`id`),
   ADD KEY `testimony_customers_customer_id_index` (`customer_id`);
 
 --
--- Indexes for table `users`
+-- Indeks untuk tabel `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `users_email_unique` (`email`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT untuk tabel yang dibuang
 --
 
 --
--- AUTO_INCREMENT for table `alamat`
+-- AUTO_INCREMENT untuk tabel `alamat`
 --
 ALTER TABLE `alamat`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT for table `alamat_toko`
+-- AUTO_INCREMENT untuk tabel `alamat_toko`
 --
 ALTER TABLE `alamat_toko`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `categories`
+-- AUTO_INCREMENT untuk tabel `categories`
 --
 ALTER TABLE `categories`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
--- AUTO_INCREMENT for table `cekongkir`
+-- AUTO_INCREMENT untuk tabel `cekongkir`
 --
 ALTER TABLE `cekongkir`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `cities`
+-- AUTO_INCREMENT untuk tabel `cities`
 --
 ALTER TABLE `cities`
   MODIFY `city_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=803;
 
 --
--- AUTO_INCREMENT for table `couriers`
+-- AUTO_INCREMENT untuk tabel `couriers`
 --
 ALTER TABLE `couriers`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT for table `detail_order`
+-- AUTO_INCREMENT untuk tabel `detail_order`
 --
 ALTER TABLE `detail_order`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
 
 --
--- AUTO_INCREMENT for table `failed_jobs`
+-- AUTO_INCREMENT untuk tabel `failed_jobs`
 --
 ALTER TABLE `failed_jobs`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `keranjang`
+-- AUTO_INCREMENT untuk tabel `keranjang`
 --
 ALTER TABLE `keranjang`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT for table `migrations`
+-- AUTO_INCREMENT untuk tabel `migrations`
 --
 ALTER TABLE `migrations`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
--- AUTO_INCREMENT for table `order`
+-- AUTO_INCREMENT untuk tabel `order`
 --
 ALTER TABLE `order`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 
 --
--- AUTO_INCREMENT for table `posts`
+-- AUTO_INCREMENT untuk tabel `posts`
 --
 ALTER TABLE `posts`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `products`
+-- AUTO_INCREMENT untuk tabel `products`
 --
 ALTER TABLE `products`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 
 --
--- AUTO_INCREMENT for table `provinces`
+-- AUTO_INCREMENT untuk tabel `provinces`
 --
 ALTER TABLE `provinces`
   MODIFY `province_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
--- AUTO_INCREMENT for table `rekening`
+-- AUTO_INCREMENT untuk tabel `rekening`
 --
 ALTER TABLE `rekening`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT for table `response_review`
+-- AUTO_INCREMENT untuk tabel `response_review`
 --
 ALTER TABLE `response_review`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT for table `reviews`
+-- AUTO_INCREMENT untuk tabel `reviews`
 --
 ALTER TABLE `reviews`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
--- AUTO_INCREMENT for table `status_order`
+-- AUTO_INCREMENT untuk tabel `status_order`
 --
 ALTER TABLE `status_order`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
--- AUTO_INCREMENT for table `testimony_customers`
+-- AUTO_INCREMENT untuk tabel `testimony_customers`
 --
 ALTER TABLE `testimony_customers`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `users`
+-- AUTO_INCREMENT untuk tabel `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
--- Constraints for dumped tables
+-- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
 --
 
 --
--- Constraints for table `cities`
+-- Ketidakleluasaan untuk tabel `cities`
 --
 ALTER TABLE `cities`
   ADD CONSTRAINT `cities_province_id_foreign` FOREIGN KEY (`province_id`) REFERENCES `provinces` (`province_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `products`
+-- Ketidakleluasaan untuk tabel `products`
 --
 ALTER TABLE `products`
   ADD CONSTRAINT `products_pengrajin_id_foreign` FOREIGN KEY (`pengrajin_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 
 --
--- Constraints for table `response_review`
+-- Ketidakleluasaan untuk tabel `response_review`
 --
 ALTER TABLE `response_review`
   ADD CONSTRAINT `response_review_review_id_foreign` FOREIGN KEY (`review_id`) REFERENCES `reviews` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `response_review_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 
 --
--- Constraints for table `reviews`
+-- Ketidakleluasaan untuk tabel `reviews`
 --
 ALTER TABLE `reviews`
   ADD CONSTRAINT `reviews_order_id_foreign` FOREIGN KEY (`order_id`) REFERENCES `order` (`id`) ON DELETE CASCADE,
