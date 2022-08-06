@@ -36,7 +36,7 @@
                     <img src="{{ asset('adminassets') }}/assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
                     <h4 class="font-weight-normal mb-3">Pelanggan <i class="mdi mdi-diamond mdi-24px float-right"></i>
                     </h4>
-                    <h2 class="mb-5">{{ $pelanggan->total_user }}</h2>
+                    <h2 class="mb-5">{{ $pelanggan }}</h2>
                   </div>
                 </div>
               </div>
