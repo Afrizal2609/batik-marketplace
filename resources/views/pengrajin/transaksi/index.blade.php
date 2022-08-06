@@ -51,7 +51,8 @@
                                   
                                     
                                       <a href="{{ route('pengrajin.transaksi.konfirmasi_pesanan',['id' => $order->id]) }}" onclick="return confirm('Yakin ingin mengonfirmasi pesanan ini?')" class="btn btn-success mr-1">Konfirmasi Pesanan</a><br>
-                            <small>Klik tombol ini jika pembeli sudah terbukti melakukan konfirmasi pesanan</small>
+                                      <a href="{{ route('pengrajin.transaksi.batalkan_pesanan',['id' => $order->id]) }}" onclick="return confirm('Yakin ingin membatalkan pesanan ini?')" class="btn btn-danger mr-1">Batalkan Pesanan</a><br>
+                            {{-- <small>Klik tombol ini jika pembeli sudah terbukti melakukan konfirmasi pesanan</small> --}}
                             </td>
 
                                   </a>

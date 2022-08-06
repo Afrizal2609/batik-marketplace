@@ -121,6 +121,7 @@ Route::group(['middleware' => 'auth'],function(){
     Route::get('/pengrajin/transaksi/dibatalkan','pengrajin\TransaksiController@dibatalkan')->name('pengrajin.transaksi.dibatalkan');
      Route::get('/pengrajin/transaksi/detail_konfirmasi/{id}','pengrajin\TransaksiController@detail')->name('pengrajin.transaksi.detail_konfirmasi');
       Route::get('/pengrajin/transaksi/konfirmasi_pesanan/{id}','pengrajin\TransaksiController@konfirmasi_pesanan')->name('pengrajin.transaksi.konfirmasi_pesanan');
+      Route::get('/pengrajin/transaksi/batalkan_pesanan/{id}','pengrajin\TransaksiController@batalkan_pesanan')->name('pengrajin.transaksi.batalkan_pesanan');
 
     Route::get('/pengrajin/product-review', 'pengrajin\ReviewController@index')->name('pengrajin.review');
     Route::get('/pengrajin/product-review/{id}', 'pengrajin\ReviewController@detail')->name('pengrajin.review.detail');

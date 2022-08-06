@@ -280,6 +280,15 @@ class TransaksiController extends Controller
         return redirect()->route('pengrajin.transaksi.perludikirim')->with('status','Berhasil Mengonfirmasi Pembayaran Pesanan');
     }
 
+    public function batalkan_pesanan($id)
+    {
+        //function ini untuk mengkonfirmasi bahwa pelanngan sudah melakukan pembayaran
+        $order = Order::findOrFail($id);
+        $order->status_order_id = 7;
+        $order->save();
+        return redirect()->route('pengrajin.transaksi.dibatalkan')->with('status','Berhasil Membatalkan Pesanan');
+    }
+
     public function konfirmasi_pesanan($id)
     {
         //function ini untuk mengkonfirmasi bahwa pelanngan sudah oke dalam pesanannya
