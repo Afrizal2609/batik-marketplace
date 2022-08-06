@@ -16,7 +16,7 @@ class CreateAlamatTokoTable extends Migration
         Schema::create('alamat_toko', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('city_id')->unsigned();
-            $table->string('detail');
+            $table->text('detail');
             $table->timestamps();
 
             $table->foreign('city_id')->references('city_id')->on('cities')->onUpdate('cascade')->onDelete('cascade');
