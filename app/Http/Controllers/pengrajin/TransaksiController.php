@@ -13,6 +13,47 @@ class TransaksiController extends Controller
     {
         $this->middleware('auth');
     }
+    function notif()
+    {
+        // untuk notifikasi pesanan baru
+        $order1 = DB::table('order')
+            ->join('status_order', 'status_order.id', '=', 'order.status_order_id')
+            ->join('users', 'users.id', '=', 'order.user_id')
+            ->select('order.*', 'status_order.name', 'users.name as nama_pemesan')
+            ->where('order.status_order_id', 1)
+            ->get();
+
+        // untuk notifikasi perlu dicek
+        $order2 = DB::table('order')
+            ->join('status_order', 'status_order.id', '=', 'order.status_order_id')
+            ->join('users', 'users.id', '=', 'order.user_id')
+            ->select('order.*', 'status_order.name', 'users.name as nama_pemesan')
+            ->where('order.status_order_id', 2)
+            ->orWhere('order.status_order_id', 3)
+            ->get();
+
+        // untuk notifikasi perlu dikirim
+        $order3 = DB::table('order')
+            ->join('status_order', 'status_order.id', '=', 'order.status_order_id')
+            ->join('users', 'users.id', '=', 'order.user_id')
+            ->select('order.*', 'status_order.name', 'users.name as nama_pemesan')
+            ->where('order.status_order_id', 4)
+            ->get();
+
+        // untuk notifikasi barang dikirim
+        $order4 = DB::table('order')
+            ->join('status_order', 'status_order.id', '=', 'order.status_order_id')
+            ->join('users', 'users.id', '=', 'order.user_id')
+            ->select('order.*', 'status_order.name', 'users.name as nama_pemesan')
+            ->where('order.status_order_id', 5)
+            ->get();
+
+        $notif1 = count($order1);
+        $notif2 = count($order2);
+        $notif3 = count($order3);
+        $notif4 = count($order4);
+        return [$notif1, $notif2, $notif3, $notif4];
+    }
 
     public function index()
     {
@@ -41,7 +82,8 @@ class TransaksiController extends Controller
             }
         }
         $data = array(
-            'orderbaru' => $order
+            'orderbaru' => $order,
+            'notif' => $this->notif()
         );
 
         return view('pengrajin.transaksi.index', $data);
@@ -119,7 +161,8 @@ class TransaksiController extends Controller
         }
         // return auth()->user()->id;
         $data = array(
-            'orderbaru' => $order
+            'orderbaru' => $order,
+            'notif' => $this->notif()
         );
 
         return view('pengrajin.transaksi.perludicek', $data);
@@ -152,7 +195,8 @@ class TransaksiController extends Controller
             }
         }
         $data = array(
-            'orderbaru' => $order
+            'orderbaru' => $order,
+            'notif' => $this->notif()
         );
 
         return view('pengrajin.transaksi.perludikirim', $data);
@@ -204,6 +248,7 @@ class TransaksiController extends Controller
             ->select('order.*', 'status_order.name', 'users.name as nama_pemesan')
             ->where('order.status_order_id', 7)
             ->get();
+        $notif1 = count($order);
         foreach ($order as $key => $value) {
             $detail_order = DB::table('detail_order')
                 ->join('products', 'products.id', '=', 'detail_order.product_id')
@@ -254,7 +299,8 @@ class TransaksiController extends Controller
         }
 
         $data = array(
-            'orderbaru' => $order
+            'orderbaru' => $order,
+            'notif' => $this->notif()
         );
 
         return view('pengrajin.transaksi.dikirim', $data);
@@ -291,7 +337,7 @@ class TransaksiController extends Controller
         $order = Order::findOrFail($id);
         $order->status_order_id = 7;
         $order->save();
-        return redirect()->route('pengrajin.transaksi.dibatalkan')->with('status','Berhasil Membatalkan Pesanan');
+        return redirect()->route('pengrajin.transaksi.dibatalkan')->with('status', 'Berhasil Membatalkan Pesanan');
     }
 
     public function konfirmasi_pesanan($id)

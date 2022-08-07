@@ -15,6 +15,13 @@ class DashboardpengrajinController extends Controller
 
     public function index()
     {
+        $order = DB::table('order')
+            ->join('status_order', 'status_order.id', '=', 'order.status_order_id')
+            ->join('users', 'users.id', '=', 'order.user_id')
+            ->select('order.*', 'status_order.name', 'users.name as nama_pemesan')
+            ->where('order.status_order_id', 1)
+            ->get();
+        $notif1 = count($order);
 
         //ambil data data untuk ditampilkan di card pada dashboard
         $dataTransaction = DB::table('order')
@@ -89,7 +96,7 @@ class DashboardpengrajinController extends Controller
             ->select(DB::raw('COUNT(distinct order.user_id) as total_user'))
             ->where([['order.status_order_id', '=', 6], ['users.id', '=', auth()->user()->id]])
             ->get();
-        // return $pelanggan;
+
         $order_terbaru = DB::table('order')
             ->join('status_order', 'status_order.id', '=', 'order.status_order_id')
             ->join('users', 'users.id', '=', 'order.user_id')
@@ -119,7 +126,8 @@ class DashboardpengrajinController extends Controller
             'pendapatan' => $income,
             'transaksi'  => $transaction_count,
             'pelanggan'  => $jumlahUser,
-            'order_baru' => $order_terbaru
+            'order_baru' => $order_terbaru,
+            'notif1'     => $notif1
         );
 
         return view('pengrajin/dashboardpengrajin', $data);

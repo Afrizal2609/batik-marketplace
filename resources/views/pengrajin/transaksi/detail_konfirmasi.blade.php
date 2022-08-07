@@ -40,13 +40,6 @@
                             <td>:</td>
                             <td  class="p-2">{{ $order->metode_pembayaran }}</td>
                         </tr>
-                        @if($order->metode_pembayaran == 'cod')
-                        <tr>
-                            <td>Biaya Cod</td>
-                            <td>:</td>
-                            <td  class="p-2">{{ $order->biaya_cod }}</td>
-                        </tr>
-                        @endif
                         <tr>
                             <td>Status Pesanan</td>
                             <td>:</td>
