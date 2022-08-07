@@ -26,72 +26,85 @@
       <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
-      <ul>
-              @if (Route::has('login'))
+      <div class="d-flex flex-row" style="margin-bottom:0; margin-top:10px; height:40px">
+            @if (Route::has('login'))
                     @auth
-                        
-                          <div class="dropdown ">
-                            <a class="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style= "color:white">
-                            <span class="icon icon-person" style= "color:white"></span>
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" >
-                                <a class="dropdown-item" href="{{ route('user.alamat') }}">Setting Alamat</a>
-                                <a class="dropdown-item" href="#">
-                                
-                                <a class="dropdown-item" href="{{ route('logout') }}"
-                                  onclick="event.preventDefault();
-                                                document.getElementById('logout-form').submit();">
-                                  <i class="mdi mdi-logout mr-2 text-primary"></i> Logout 
-                              </a>
-
-                              <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                  @csrf
-                              </form>
-                            </div>&nbsp&nbsp&nbsp&nbsp&nbsp
-                          <?php
-                            $user_id = \Auth::user()->id;
-                            $total_keranjang = \DB::table('keranjang')
-                            ->select(DB::raw('count(id) as jumlah'))
-                            ->where('user_id',$user_id)
-                            ->first();
-                          ?>
-                            <a href="{{ route('user.keranjang') }}" class="site-cart">
-                            <span class="icon icon-add_shopping_cart" style= "color:white"></span>
-                            
-                            <span style= "color:white" class="count">{{ $total_keranjang->jumlah }}</span>
-                            </a>&nbsp&nbsp&nbsp&nbsp&nbsp
-                        <?php
-                            $user_id = \Auth::user()->id;
-                            $total_order = \DB::table('order')
-                            ->select(DB::raw('count(id) as jumlah'))
-                            ->where('user_id',$user_id)
-                            ->where('status_order_id','!=',5)
-                            ->where('status_order_id','!=',6)
-                            ->first();
-                          ?>
-                        <a href="{{ route('user.order') }}" class="site-cart">
-                            <span class="icon icon-shopping_cart" style= "color:white"></span>
-                            <span style= "color:white" class="count">{{ $total_order->jumlah }} </span>
-                            </a>
-                    @else 
-                    <div class="dropdown">
-                            <a class="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style= "color:white">
-                            <span class="icon icon-person" style= "color:white"></span>
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <a class="dropdown-item" href="{{ route('login') }}">Login</a>
-                                @if (Route::has('register'))
-                                  <a class="dropdown-item" href="{{ route('register') }}">Register</a>
-                                @endif
-                            </div>
-                            </div>
+                <div class="dropdown">
+                  <a class="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style= "color:white">
+                    <span class="icon icon-person" style= "color:white"></span>
+                  </a>
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" >
+                    <a class="dropdown-item" href="{{ route('user.alamat') }}">Setting Alamat</a>
+                    <a class="dropdown-item" href="#">
+                    <a class="dropdown-item" href="{{ route('logout') }}"
+                      onclick="event.preventDefault();
+                      document.getElementById('logout-form').submit();">
+                      <i class="mdi mdi-logout mr-2 text-primary"></i> Logout 
+                    </a>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">@csrf</form>
+                  </div>&nbsp&nbsp&nbsp&nbsp&nbsp
+                  <?php
+                     $user_id = \Auth::user()->id;
+                    $total_keranjang = \DB::table('keranjang')
+                    ->select(DB::raw('count(id) as jumlah'))
+                    ->where('user_id',$user_id)
+                    ->first();
+                  ?>
+                  <a href="{{ route('user.keranjang') }}" class="site-cart">
+                    <span class="icon icon-add_shopping_cart" style= "color:white"></span>
+                    <span style= "color:white" class="count">{{ $total_keranjang->jumlah }}</span>
+                  </a>&nbsp&nbsp&nbsp&nbsp&nbsp
+                  <?php
+                    $user_id = \Auth::user()->id;
+                    $total_order = \DB::table('order')
+                    ->select(DB::raw('count(id) as jumlah'))
+                    ->where('user_id',$user_id)
+                    ->where('status_order_id','!=',5)
+                    ->where('status_order_id','!=',6)
+                    ->first();
+                  ?>
+                  <a href="{{ route('user.order') }}" class="site-cart">
+                    <span class="icon icon-shopping_cart" style= "color:white"></span>
+                    <span style= "color:white" class="count">{{ $total_order->jumlah }} </span>
+                  </a>
+                  @else 
+                    <div class="dropdown col-sm">
+                      <a class="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style= "color:white">
+                        <span class="icon icon-person" style= "color:white"></span>
+                      </a>
+                      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="{{ route('login') }}">Login</a>
+                          @if (Route::has('register'))
+                        <a class="dropdown-item" href="{{ route('register') }}">Register</a>
+                        @endif
+                      </div>
+                    </div>
+                    <div class="d-inline-block d-md-none ml-md-0 col-sm">
+                      <a href="#" class="site-menu-toggle js-menu-toggle">
+                        <div class="dropdown" >
+                          <a class="btn btn-secondary dropdown-toggle" role="button" data-toggle="dropdown" aria-expanded="false">
+                            Ξ
+                          </a>
+                          <div class="dropdown-menu ">
+                            <li class="nav-item {{ Request::path() === '/' ? '' : '' }}">
+                              <a class="nav-link" href="{{ route('home') }}" style= "color:black"><strong>Beranda</strong></a>
+                            </li>
+                            <li class="nav-item {{ Request::path() === 'produk' ? '' : '' }}">
+                              <a class="nav-link" href="{{ route('user.produk') }}" style= "color:black"><strong>Produk</strong></a>
+                            </li>
+                            <li class="nav-item {{ Request::path() === '/' ? '' : '' }}">
+                              <a class="nav-link" href="{{ url('tentang') }}" style= "color:black"><strong>About Us</strong></a>
+                            </li>
+                          </div>
+                        </div> 
+                      </a>
                     @endauth
                 </div>
-            @endif
-            <li class="d-inline-block d-md-none ml-md-0"><a href="#" class="site-menu-toggle js-menu-toggle"><span class="icon-menu"></span></a></li>
-            </div>
-            </ul>
-      <div></div>
+            @endif   
+          </div>
+        </div>
+      </div>
+      
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item {{ Request::path() === '/' ? '' : '' }}">
