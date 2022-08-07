@@ -100,7 +100,10 @@
             </li>
             <li class="nav-item ">
               <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
-                <span class="menu-title">Pesanan</span>
+                <span class="menu-title">Pesanan</span> 
+                @if($totalPem != 0) 
+                    <span class="badge rounded-pill badge-danger">{{ number_format($totalPem) }}</span>
+                @endif
                 <i class="menu-arrow"></i>
                 <i class="mdi mdi-shopping menu-icon"></i>
               </a>

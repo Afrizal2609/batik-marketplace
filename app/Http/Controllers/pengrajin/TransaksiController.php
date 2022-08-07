@@ -16,36 +16,40 @@ class TransaksiController extends Controller
     function notif()
     {
         // untuk notifikasi pesanan baru
-        $order1 = DB::table('order')
-            ->join('status_order', 'status_order.id', '=', 'order.status_order_id')
-            ->join('users', 'users.id', '=', 'order.user_id')
-            ->select('order.*', 'status_order.name', 'users.name as nama_pemesan')
-            ->where('order.status_order_id', 1)
+        $order1 = DB::table('detail_order')
+            ->join('order', 'order.id', '=', 'detail_order.order_id')
+            ->join('products', 'products.id', '=', 'detail_order.product_id')
+            ->select(DB::raw('distinct detail_order.*', 'order.*', 'products.*'))
+            ->where([['order.status_order_id', 1], ['products.pengrajin_id', auth()->user()->id]])
+            ->groupBy('order.id')
             ->get();
 
         // untuk notifikasi perlu dicek
-        $order2 = DB::table('order')
-            ->join('status_order', 'status_order.id', '=', 'order.status_order_id')
-            ->join('users', 'users.id', '=', 'order.user_id')
-            ->select('order.*', 'status_order.name', 'users.name as nama_pemesan')
-            ->where('order.status_order_id', 2)
-            ->orWhere('order.status_order_id', 3)
+        $order2 = DB::table('detail_order')
+            ->join('order', 'order.id', '=', 'detail_order.order_id')
+            ->join('products', 'products.id', '=', 'detail_order.product_id')
+            ->select(DB::raw('distinct detail_order.*', 'order.*', 'products.*'))
+            ->where('products.pengrajin_id', auth()->user()->id)
+            ->whereIn('order.status_order_id', [2, 3])
+            ->groupBy('order.id')
             ->get();
 
         // untuk notifikasi perlu dikirim
-        $order3 = DB::table('order')
-            ->join('status_order', 'status_order.id', '=', 'order.status_order_id')
-            ->join('users', 'users.id', '=', 'order.user_id')
-            ->select('order.*', 'status_order.name', 'users.name as nama_pemesan')
-            ->where('order.status_order_id', 4)
+        $order3 = DB::table('detail_order')
+            ->join('order', 'order.id', '=', 'detail_order.order_id')
+            ->join('products', 'products.id', '=', 'detail_order.product_id')
+            ->select(DB::raw('distinct detail_order.*', 'order.*', 'products.*'))
+            ->where([['order.status_order_id', 4], ['products.pengrajin_id', auth()->user()->id]])
+            ->groupBy('order.id')
             ->get();
 
         // untuk notifikasi barang dikirim
-        $order4 = DB::table('order')
-            ->join('status_order', 'status_order.id', '=', 'order.status_order_id')
-            ->join('users', 'users.id', '=', 'order.user_id')
-            ->select('order.*', 'status_order.name', 'users.name as nama_pemesan')
-            ->where('order.status_order_id', 5)
+        $order4 = DB::table('detail_order')
+            ->join('order', 'order.id', '=', 'detail_order.order_id')
+            ->join('products', 'products.id', '=', 'detail_order.product_id')
+            ->select(DB::raw('distinct detail_order.*', 'order.*', 'products.*'))
+            ->where([['order.status_order_id', 5], ['products.pengrajin_id', auth()->user()->id]])
+            ->groupBy('order.id')
             ->get();
 
         $notif1 = count($order1);
@@ -53,6 +57,8 @@ class TransaksiController extends Controller
         $notif3 = count($order3);
         $notif4 = count($order4);
         return [$notif1, $notif2, $notif3, $notif4];
+
+        $totalPem = $notif1 + $notif2 + $notif3 + $notif4;
     }
 
     public function index()
@@ -83,7 +89,8 @@ class TransaksiController extends Controller
         }
         $data = array(
             'orderbaru' => $order,
-            'notif' => $this->notif()
+            'notif' => $this->notif(),
+            'totalPem' => $this->notif()[0] + $this->notif()[1] + $this->notif()[2] + $this->notif()[3]
         );
 
         return view('pengrajin.transaksi.index', $data);
@@ -142,6 +149,7 @@ class TransaksiController extends Controller
             ->where('order.status_order_id', 2)
             ->orWhere('order.status_order_id', 3)
             ->get();
+
         // return $order;
         foreach ($order as $key => $value) {
             $detail_order = DB::table('detail_order')
@@ -159,10 +167,13 @@ class TransaksiController extends Controller
                 unset($order[$key]);
             }
         }
+
+        // return $order;
         // return auth()->user()->id;
         $data = array(
             'orderbaru' => $order,
-            'notif' => $this->notif()
+            'notif' => $this->notif(),
+            'totalPem' => $this->notif()[0] + $this->notif()[1] + $this->notif()[2] + $this->notif()[3]
         );
 
         return view('pengrajin.transaksi.perludicek', $data);
@@ -196,7 +207,8 @@ class TransaksiController extends Controller
         }
         $data = array(
             'orderbaru' => $order,
-            'notif' => $this->notif()
+            'notif' => $this->notif(),
+            'totalPem' => $this->notif()[0] + $this->notif()[1] + $this->notif()[2] + $this->notif()[3]
         );
 
         return view('pengrajin.transaksi.perludikirim', $data);
@@ -266,7 +278,9 @@ class TransaksiController extends Controller
             }
         }
         $data = array(
-            'orderbaru' => $order
+            'orderbaru' => $order,
+            'notif' => $this->notif(),
+            'totalPem' => $this->notif()[0] + $this->notif()[1] + $this->notif()[2] + $this->notif()[3]
         );
 
         return view('pengrajin.transaksi.dibatalkan', $data);
@@ -300,7 +314,8 @@ class TransaksiController extends Controller
 
         $data = array(
             'orderbaru' => $order,
-            'notif' => $this->notif()
+            'notif' => $this->notif(),
+            'totalPem' => $this->notif()[0] + $this->notif()[1] + $this->notif()[2] + $this->notif()[3]
         );
 
         return view('pengrajin.transaksi.dikirim', $data);

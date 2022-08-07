@@ -93,15 +93,42 @@
             <li class="nav-item ">
               <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
                 <span class="menu-title">Transaksi</span>
+                @if($totalPem != 0) 
+                    <span class="badge rounded-pill badge-danger">{{ number_format($totalPem) }}</span>
+                @endif
                 <i class="menu-arrow"></i>
                 <i class="mdi mdi-shopping menu-icon"></i>
               </a>
               <div class="collapse" id="ui-basic">
                 <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="{{ route('admin.transaksi') }}">Pesanan Baru</a></li>
-                <li class="nav-item"> <a class="nav-link" href="{{ route('admin.transaksi.perludicek') }}">Perlu Di Cek</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="{{ route('admin.transaksi.perludikirim') }}">Perlu Di Kirim</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="{{ route('admin.transaksi.dikirim') }}">Barang Di Kirim</a></li>
+                <li class="nav-item"> 
+                  <a class="nav-link" href="{{ route('admin.transaksi') }}">Pesanan Baru
+                    @if($notif[0] != 0) 
+                      <span class="badge rounded-pill badge-danger">{{ $notif[0] }}</span>
+                    @endif
+                </a>
+                </li>
+                <li class="nav-item"> 
+                  <a class="nav-link" href="{{ route('admin.transaksi.perludicek') }}">Perlu Di Cek
+                    @if($notif[1] != 0) 
+                      <span class="badge rounded-pill badge-danger">{{ $notif[1] }}</span>
+                    @endif
+                  </a>
+                </li>
+                  <li class="nav-item"> 
+                    <a class="nav-link" href="{{ route('admin.transaksi.perludikirim') }}">Perlu Di Kirim
+                      @if($notif[2] != 0) 
+                        <span class="badge rounded-pill badge-danger">{{ $notif[2] }}</span>
+                      @endif
+                    </a>
+                  </li>
+                  <li class="nav-item"> 
+                    <a class="nav-link" href="{{ route('admin.transaksi.dikirim') }}">Barang Di Kirim
+                      @if($notif[3] != 0) 
+                        <span class="badge rounded-pill badge-danger">{{ $notif[3] }}</span>
+                      @endif
+                    </a>
+                  </li>
                   <li class="nav-item"> <a class="nav-link" href="{{ route('admin.transaksi.selesai') }}">Selesai</a></li>
                   <li class="nav-item"> <a class="nav-link" href="{{ route('admin.transaksi.dibatalkan') }}">Dibatalkan</a></li>
                 </ul>
