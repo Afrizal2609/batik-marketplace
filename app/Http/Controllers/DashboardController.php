@@ -18,56 +18,11 @@ class DashboardController extends Controller
     {
         $this->middleware('auth');
     }
-    function notif()
-    {
-        // untuk notifikasi pesanan baru
-        $order1 = DB::table('detail_order')
-            ->join('order', 'order.id', '=', 'detail_order.order_id')
-            ->join('products', 'products.id', '=', 'detail_order.product_id')
-            ->select(DB::raw('distinct detail_order.*', 'order.*', 'products.*'))
-            ->where('order.status_order_id', 1)
-            ->groupBy('order.id')
-            ->get();
-
-        // untuk notifikasi perlu dicek
-        $order2 = DB::table('detail_order')
-            ->join('order', 'order.id', '=', 'detail_order.order_id')
-            ->join('products', 'products.id', '=', 'detail_order.product_id')
-            ->select(DB::raw('distinct detail_order.*', 'order.*', 'products.*'))
-            ->whereIn('order.status_order_id', [2, 3])
-            ->groupBy('order.id')
-            ->get();
-
-        // untuk notifikasi perlu dikirim
-        $order3 = DB::table('detail_order')
-            ->join('order', 'order.id', '=', 'detail_order.order_id')
-            ->join('products', 'products.id', '=', 'detail_order.product_id')
-            ->select(DB::raw('distinct detail_order.*', 'order.*', 'products.*'))
-            ->where('order.status_order_id', 4)
-            ->groupBy('order.id')
-            ->get();
-
-        // untuk notifikasi barang dikirim
-        $order4 = DB::table('detail_order')
-            ->join('order', 'order.id', '=', 'detail_order.order_id')
-            ->join('products', 'products.id', '=', 'detail_order.product_id')
-            ->select(DB::raw('distinct detail_order.*', 'order.*', 'products.*'))
-            ->where('order.status_order_id', 5)
-            ->groupBy('order.id')
-            ->get();
-
-        $notif1 = count($order1);
-        $notif2 = count($order2);
-        $notif3 = count($order3);
-        $notif4 = count($order4);
-        return [$notif1, $notif2, $notif3, $notif4];
-
-        $totalPem = $notif1 + $notif2 + $notif3 + $notif4;
-    }
 
     public function index()
     {
-
+        // memanggil fungsi notif dari helpers.php
+        $notifikasi = notif();
         //ambil data data untuk ditampilkan di card pada dashboard
         $pendapatan = DB::table('order')
             ->select(DB::raw('SUM(subtotal) as penghasilan'))
@@ -76,10 +31,13 @@ class DashboardController extends Controller
         $transaksi = DB::table('order')
             ->select(DB::raw('COUNT(id) as total_order'))
             ->first();
-        $pelanggan = DB::table('users')
-            ->select(DB::raw('COUNT(id) as total_user'))
-            ->where('roles', '=', 'customer')
+        $pelanggan = DB::table('order')
+            ->join('status_order', 'status_order.id', '=', 'order.status_order_id')
+            ->join('users', 'users.id', '=', 'order.user_id')
+            ->select(DB::raw('COUNT(distinct order.user_id) as total_user'))
+            ->where('order.status_order_id', '=', 6)
             ->first();
+
         $order_terbaru = $order = DB::table('order')
             ->join('status_order', 'status_order.id', '=', 'order.status_order_id')
             ->join('users', 'users.id', '=', 'order.user_id')
@@ -91,8 +49,8 @@ class DashboardController extends Controller
             'transaksi'  => $transaksi,
             'pelanggan'  => $pelanggan,
             'order_baru' => $order_terbaru,
-            'notif' => $this->notif(),
-            'totalPem' => $this->notif()[0] + $this->notif()[1] + $this->notif()[2] + $this->notif()[3]
+            'notif' => $notifikasi,
+            'totalPem' => $notifikasi[4]
         );
 
         return view('admin/dashboard', $data);
