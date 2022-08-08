@@ -13,56 +13,11 @@ class TransaksiController extends Controller
     {
         $this->middleware('auth');
     }
-    function notif()
-    {
-        // untuk notifikasi pesanan baru
-        $order1 = DB::table('detail_order')
-            ->join('order', 'order.id', '=', 'detail_order.order_id')
-            ->join('products', 'products.id', '=', 'detail_order.product_id')
-            ->select(DB::raw('distinct detail_order.*', 'order.*', 'products.*'))
-            ->where([['order.status_order_id', 1], ['products.pengrajin_id', auth()->user()->id]])
-            ->groupBy('order.id')
-            ->get();
-
-        // untuk notifikasi perlu dicek
-        $order2 = DB::table('detail_order')
-            ->join('order', 'order.id', '=', 'detail_order.order_id')
-            ->join('products', 'products.id', '=', 'detail_order.product_id')
-            ->select(DB::raw('distinct detail_order.*', 'order.*', 'products.*'))
-            ->where('products.pengrajin_id', auth()->user()->id)
-            ->whereIn('order.status_order_id', [2, 3])
-            ->groupBy('order.id')
-            ->get();
-
-        // untuk notifikasi perlu dikirim
-        $order3 = DB::table('detail_order')
-            ->join('order', 'order.id', '=', 'detail_order.order_id')
-            ->join('products', 'products.id', '=', 'detail_order.product_id')
-            ->select(DB::raw('distinct detail_order.*', 'order.*', 'products.*'))
-            ->where([['order.status_order_id', 4], ['products.pengrajin_id', auth()->user()->id]])
-            ->groupBy('order.id')
-            ->get();
-
-        // untuk notifikasi barang dikirim
-        $order4 = DB::table('detail_order')
-            ->join('order', 'order.id', '=', 'detail_order.order_id')
-            ->join('products', 'products.id', '=', 'detail_order.product_id')
-            ->select(DB::raw('distinct detail_order.*', 'order.*', 'products.*'))
-            ->where([['order.status_order_id', 5], ['products.pengrajin_id', auth()->user()->id]])
-            ->groupBy('order.id')
-            ->get();
-
-        $notif1 = count($order1);
-        $notif2 = count($order2);
-        $notif3 = count($order3);
-        $notif4 = count($order4);
-        return [$notif1, $notif2, $notif3, $notif4];
-
-        $totalPem = $notif1 + $notif2 + $notif3 + $notif4;
-    }
 
     public function index()
     {
+        // memanggil fungsi notif dari helpers.php
+        $notifikasi = notif();
         //ambil data order yang status nya 1 atau masih baru/belum dikonfirmasi
         $order = DB::table('order')
             ->join('status_order', 'status_order.id', '=', 'order.status_order_id')
@@ -89,8 +44,8 @@ class TransaksiController extends Controller
         }
         $data = array(
             'orderbaru' => $order,
-            'notif' => $this->notif(),
-            'totalPem' => $this->notif()[0] + $this->notif()[1] + $this->notif()[2] + $this->notif()[3]
+            'notif' => $notifikasi,
+            'totalPem' => $notifikasi[4]
         );
 
         return view('pengrajin.transaksi.index', $data);
@@ -98,6 +53,9 @@ class TransaksiController extends Controller
 
     public function detail($id)
     {
+        // memanggil fungsi notif dari helpers.php
+        $notifikasi = notif();
+
         //ambil data detail order sesuai id
         $detail_order = DB::table('detail_order')
             ->join('products', 'products.id', '=', 'detail_order.product_id')
@@ -113,12 +71,16 @@ class TransaksiController extends Controller
             ->first();
         $data = array(
             'detail' => $detail_order,
-            'order'  => $order
+            'order'  => $order,
+            'notif' => $notifikasi,
+            'totalPem' => $notifikasi[4]
         );
         return view('pengrajin.transaksi.detail', $data);
     }
     public function detail_konfirmasi($id)
     {
+        // memanggil fungsi notif dari helpers.php
+        $notifikasi = notif();
         //ambil data detail order sesuai id
         $detail_order = DB::table('detail_order')
             ->join('products', 'products.id', '=', 'detail_order.product_id')
@@ -134,13 +96,17 @@ class TransaksiController extends Controller
             ->first();
         $data = array(
             'detail' => $detail_order,
-            'order'  => $order
+            'order'  => $order,
+            'notif' => $notifikasi,
+            'totalPem' => $notifikasi[4]
         );
         return view('pengrajin.transaksi.detail_konfirmasi', $data);
     }
 
     public function perludicek()
     {
+        // memanggil fungsi notif dari helpers.php
+        $notifikasi = notif();
         //ambil data order yang status nya 2 atau 3 atau belum di cek / sudah bayar
         $order = DB::table('order')
             ->join('status_order', 'status_order.id', '=', 'order.status_order_id')
@@ -172,8 +138,8 @@ class TransaksiController extends Controller
         // return auth()->user()->id;
         $data = array(
             'orderbaru' => $order,
-            'notif' => $this->notif(),
-            'totalPem' => $this->notif()[0] + $this->notif()[1] + $this->notif()[2] + $this->notif()[3]
+            'notif' => $notifikasi,
+            'totalPem' => $notifikasi[4]
         );
 
         return view('pengrajin.transaksi.perludicek', $data);
@@ -181,6 +147,8 @@ class TransaksiController extends Controller
 
     public function perludikirim()
     {
+        // memanggil fungsi notif dari helpers.php
+        $notifikasi = notif();
         //ambil data order yang status nya 4 sudah dicek dan perlu dikirim(input no resi)
         $order = DB::table('order')
             ->join('status_order', 'status_order.id', '=', 'order.status_order_id')
@@ -207,8 +175,8 @@ class TransaksiController extends Controller
         }
         $data = array(
             'orderbaru' => $order,
-            'notif' => $this->notif(),
-            'totalPem' => $this->notif()[0] + $this->notif()[1] + $this->notif()[2] + $this->notif()[3]
+            'notif' => $notifikasi,
+            'totalPem' => $notifikasi[4]
         );
 
         return view('pengrajin.transaksi.perludikirim', $data);
@@ -216,6 +184,8 @@ class TransaksiController extends Controller
 
     public function selesai()
     {
+        // memanggil fungsi notif dari helpers.php
+        $notifikasi = notif();
         //ambil data order yang status nya 6 barang sudah diterima pelangan
         $order = DB::table('order')
             ->join('status_order', 'status_order.id', '=', 'order.status_order_id')
@@ -245,7 +215,9 @@ class TransaksiController extends Controller
             }
         }
         $data = array(
-            'orderbaru' => $order
+            'orderbaru' => $order,
+            'notif' => $notifikasi,
+            'totalPem' => $notifikasi[4]
         );
 
         return view('pengrajin.transaksi.selesai', $data);
@@ -253,6 +225,8 @@ class TransaksiController extends Controller
 
     public function dibatalkan()
     {
+        // memanggil fungsi notif dari helpers.php
+        $notifikasi = notif();
         //ambil data order yang status nya 7 dibatalkan pelanngan
         $order = DB::table('order')
             ->join('status_order', 'status_order.id', '=', 'order.status_order_id')
@@ -279,8 +253,8 @@ class TransaksiController extends Controller
         }
         $data = array(
             'orderbaru' => $order,
-            'notif' => $this->notif(),
-            'totalPem' => $this->notif()[0] + $this->notif()[1] + $this->notif()[2] + $this->notif()[3]
+            'notif' => $notifikasi,
+            'totalPem' => $notifikasi[4]
         );
 
         return view('pengrajin.transaksi.dibatalkan', $data);
@@ -288,6 +262,8 @@ class TransaksiController extends Controller
 
     public function dikirim()
     {
+        // memanggil fungsi notif dari helpers.php
+        $notifikasi = notif();
         //ambil data order yang status nya 5 atau sedang dikirim
         $order = DB::table('order')
             ->join('status_order', 'status_order.id', '=', 'order.status_order_id')
@@ -314,8 +290,8 @@ class TransaksiController extends Controller
 
         $data = array(
             'orderbaru' => $order,
-            'notif' => $this->notif(),
-            'totalPem' => $this->notif()[0] + $this->notif()[1] + $this->notif()[2] + $this->notif()[3]
+            'notif' => $notifikasi,
+            'totalPem' => $notifikasi[4]
         );
 
         return view('pengrajin.transaksi.dikirim', $data);

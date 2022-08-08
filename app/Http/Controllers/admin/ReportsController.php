@@ -16,6 +16,8 @@ class ReportsController extends Controller
 
     public function index(Request $request)
     {
+        // memanggil fungsi notif dari helpers.php
+        $notifikasi = notif();
         //untuk kueri penjualan harian per pengrajin
         $queryMode = true;
 
@@ -28,23 +30,23 @@ class ReportsController extends Controller
             $queryMode = false;
         }
         $satus_order_value = DB::table('status_order')
-        ->select('status_order.id', 'status_order.name')
-        ->get();
+            ->select('status_order.id', 'status_order.name')
+            ->get();
 
         $recap = array();
 
         $yearlyTransaction = DB::table('order')
-        ->select('order.*')
-        ->where('status_order_id', 6)
-        ->whereYear('created_at', '=', $request->year)
+            ->select('order.*')
+            ->where('status_order_id', 6)
+            ->whereYear('created_at', '=', $request->year)
             ->get();
         $income = 0;
         foreach ($yearlyTransaction as $transaction) {
             $detail_order = DB::table('detail_order')
-            ->join('products', 'products.id', '=', 'detail_order.product_id')
-            ->join('order', 'order.id', '=', 'detail_order.order_id')
-            ->select('products.id as product_id', 'products.name as nama_produk', 'products.image', 'detail_order.*', 'products.price', 'order.*', 'products.pengrajin_id')
-            ->where('detail_order.order_id', $transaction->id)
+                ->join('products', 'products.id', '=', 'detail_order.product_id')
+                ->join('order', 'order.id', '=', 'detail_order.order_id')
+                ->select('products.id as product_id', 'products.name as nama_produk', 'products.image', 'detail_order.*', 'products.price', 'order.*', 'products.pengrajin_id')
+                ->where('detail_order.order_id', $transaction->id)
                 ->get();
             foreach ($detail_order as $product) {
                 $price = (int) str_replace('.', '', $product->price);
@@ -70,14 +72,14 @@ class ReportsController extends Controller
             }
         }
         $pengrajinList = DB::table('users')
-        ->select('users.id', 'users.name')
-        ->where('roles', 'Pengrajin')
-        ->get();
+            ->select('users.id', 'users.name')
+            ->where('roles', 'Pengrajin')
+            ->get();
 
         // current pengrajin
         $pengrajin = DB::table('users')
-        ->select('users.id', 'users.name')
-        ->where('users.id', $request->pengrajin)
+            ->select('users.id', 'users.name')
+            ->where('users.id', $request->pengrajin)
             ->first();
 
         $curr = date("Y");
@@ -93,11 +95,15 @@ class ReportsController extends Controller
             'transactions' => $recap,
             'year' => $request->year,
             'years' => $years,
+            'notif' => $notifikasi,
+            'totalPem' => $notifikasi[4]
         );
         return view('admin.reports.sales.yearly', $data);
     }
     public function monthly(Request $request)
     {
+        // memanggil fungsi notif dari helpers.php
+        $notifikasi = notif();
         //untuk kueri penjualan harian per pengrajin
         $queryMode = true;
 
@@ -114,24 +120,24 @@ class ReportsController extends Controller
             $queryMode = false;
         }
         $satus_order_value = DB::table('status_order')
-        ->select('status_order.id', 'status_order.name')
-        ->get();
+            ->select('status_order.id', 'status_order.name')
+            ->get();
 
         $recap = array();
 
         $monthlyTransaction = DB::table('order')
-        ->select('order.*')
-        ->where('status_order_id', 6)
-        ->whereYear('created_at', '=', $request->year)
+            ->select('order.*')
+            ->where('status_order_id', 6)
+            ->whereYear('created_at', '=', $request->year)
             ->whereMonth('created_at', '=', $request->month)
             ->get();
         $income = 0;
         foreach ($monthlyTransaction as $transaction) {
             $detail_order = DB::table('detail_order')
-            ->join('products', 'products.id', '=', 'detail_order.product_id')
-            ->join('order', 'order.id', '=', 'detail_order.order_id')
-            ->select('products.id as product_id', 'products.name as nama_produk', 'products.image', 'detail_order.*', 'products.price', 'order.*', 'products.pengrajin_id')
-            ->where('detail_order.order_id', $transaction->id)
+                ->join('products', 'products.id', '=', 'detail_order.product_id')
+                ->join('order', 'order.id', '=', 'detail_order.order_id')
+                ->select('products.id as product_id', 'products.name as nama_produk', 'products.image', 'detail_order.*', 'products.price', 'order.*', 'products.pengrajin_id')
+                ->where('detail_order.order_id', $transaction->id)
                 ->get();
             foreach ($detail_order as $product) {
                 $price = (int) str_replace('.', '', $product->price);
@@ -157,14 +163,14 @@ class ReportsController extends Controller
             }
         }
         $pengrajinList = DB::table('users')
-        ->select('users.id', 'users.name')
-        ->where('roles', 'Pengrajin')
-        ->get();
+            ->select('users.id', 'users.name')
+            ->where('roles', 'Pengrajin')
+            ->get();
 
         // current pengrajin
         $pengrajin = DB::table('users')
-        ->select('users.id', 'users.name')
-        ->where('users.id', $request->pengrajin)
+            ->select('users.id', 'users.name')
+            ->where('users.id', $request->pengrajin)
             ->first();
 
         $months = get_months();
@@ -185,12 +191,16 @@ class ReportsController extends Controller
             'month' => $request->month,
             'year' => $request->year,
             'years' => $years,
+            'notif' => $notifikasi,
+            'totalPem' => $notifikasi[4]
         );
         return view('admin.reports.sales.monthly', $data);
     }
 
     public function daily(Request $request)
     {
+        // memanggil fungsi notif dari helpers.php
+        $notifikasi = notif();
         //untuk kueri penjualan harian per pengrajin
         $queryMode = true;
 
@@ -208,25 +218,25 @@ class ReportsController extends Controller
             $queryMode = false;
         }
         $satus_order_value = DB::table('status_order')
-        ->select('status_order.id', 'status_order.name')
-        ->get();
+            ->select('status_order.id', 'status_order.name')
+            ->get();
 
         $recap = array();
 
         $dailyTransaction = DB::table('order')
-        ->select('order.*')
-        ->where('status_order_id', 6)
-        ->whereYear('created_at', '=', $year)
+            ->select('order.*')
+            ->where('status_order_id', 6)
+            ->whereYear('created_at', '=', $year)
             ->whereMonth('created_at', '=', $month)
             ->whereDay('created_at', '=', $day)
             ->get();
         $income = 0;
         foreach ($dailyTransaction as $transaction) {
             $detail_order = DB::table('detail_order')
-            ->join('products', 'products.id', '=', 'detail_order.product_id')
-            ->join('order', 'order.id', '=', 'detail_order.order_id')
-            ->select('products.id as product_id', 'products.name as nama_produk', 'products.image', 'detail_order.*', 'products.price', 'order.*', 'products.pengrajin_id')
-            ->where('detail_order.order_id', $transaction->id)
+                ->join('products', 'products.id', '=', 'detail_order.product_id')
+                ->join('order', 'order.id', '=', 'detail_order.order_id')
+                ->select('products.id as product_id', 'products.name as nama_produk', 'products.image', 'detail_order.*', 'products.price', 'order.*', 'products.pengrajin_id')
+                ->where('detail_order.order_id', $transaction->id)
                 ->get();
             foreach ($detail_order as $product) {
                 $price = (int) str_replace('.', '', $product->price);
@@ -251,14 +261,14 @@ class ReportsController extends Controller
             }
         }
         $pengrajinList = DB::table('users')
-        ->select('users.id', 'users.name')
-        ->where('roles', 'Pengrajin')
-        ->get();
+            ->select('users.id', 'users.name')
+            ->where('roles', 'Pengrajin')
+            ->get();
 
         // current pengrajin
         $pengrajin = DB::table('users')
-        ->select('users.id', 'users.name')
-        ->where('users.id', $request->pengrajin)
+            ->select('users.id', 'users.name')
+            ->where('users.id', $request->pengrajin)
             ->first();
 
         $months = get_months();
@@ -278,8 +288,9 @@ class ReportsController extends Controller
             'month' => $month,
             'year' => $year,
             'date' => $request->date,
+            'notif' => $notifikasi,
+            'totalPem' => $notifikasi[4]
         );
         return view('admin.reports.sales.daily', $data);
     }
-    
 }

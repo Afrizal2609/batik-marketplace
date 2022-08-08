@@ -16,6 +16,11 @@ class PengaturanController extends Controller
 
     public function aturalamat()
     {
+        // memanggil fungsi notif dari helpers.php
+        $notifikasi = notif();
+
+        $data['notif'] = $notifikasi;
+        $data['totalPem'] = $notifikasi[4];
         //cek apa alamat toko sudah di set atau belum
         $cek = DB::table('alamat_toko')->count();
         $data['cekalamat'] = $cek;
@@ -33,7 +38,6 @@ class PengaturanController extends Controller
     }
     public function getCity($id)
     {
-
         //kfunction untuk mengambil data kota sesuia id parameter
         $city = City::where('province_id',$id)->get();
         //lalu return dengan format json

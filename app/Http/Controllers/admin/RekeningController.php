@@ -5,20 +5,26 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Rekening;
+use Illuminate\Support\Facades\DB;
+
 class RekeningController extends Controller
 {
     public function __construct()
     {
         $this->middleware('auth');
     }
-    
+
     public function index()
     {
+        // memanggil fungsi notif dari helpers.php
+        $notifikasi = notif();
         //mengambil data no rekening
         $data = array(
-            'rekening' => Rekening::all()
+            'rekening' => Rekening::all(),
+            'notif' => $notifikasi,
+            'totalPem' => $notifikasi[4]
         );
-        return view('admin.rekening.index',$data);
+        return view('admin.rekening.index', $data);
     }
 
     public function tambah()
@@ -36,10 +42,10 @@ class RekeningController extends Controller
             'no_rekening' => $request->no_rekening,
         ]);
 
-        return redirect()->route('admin.rekening')->with('status','Berhasil Menambah Rekening');
+        return redirect()->route('admin.rekening')->with('status', 'Berhasil Menambah Rekening');
     }
 
-    public function update($id,Request $request)
+    public function update($id, Request $request)
     {
         // update rekening
         $rekening = Rekening::FindOrFail($id);
@@ -47,7 +53,7 @@ class RekeningController extends Controller
         $rekening->atas_nama = $request->atas_nama;
         $rekening->no_rekening = $request->no_rekening;
         $rekening->save();
-        return redirect()->route('admin.rekening')->with('status','Berhasil Mengubah Rekening');
+        return redirect()->route('admin.rekening')->with('status', 'Berhasil Mengubah Rekening');
     }
 
     public function edit($id)
@@ -56,14 +62,14 @@ class RekeningController extends Controller
         $data = array(
             'rekening' => Rekening::FindOrFail($id)
         );
-        return view('admin.rekening.edit',$data);
+        return view('admin.rekening.edit', $data);
     }
 
     public function delete($id)
     {
         //hapus rekening
         Rekening::destroy($id);
-        
-        return redirect()->route('admin.rekening')->with('status','Berhasil Mengahapus Rekening');
+
+        return redirect()->route('admin.rekening')->with('status', 'Berhasil Mengahapus Rekening');
     }
 }

@@ -14,55 +14,11 @@ class ReviewController extends Controller
     {
         $this->middleware('auth');
     }
-    function notif()
-    {
-        // untuk notifikasi pesanan baru
-        $order1 = DB::table('detail_order')
-            ->join('order', 'order.id', '=', 'detail_order.order_id')
-            ->join('products', 'products.id', '=', 'detail_order.product_id')
-            ->select(DB::raw('distinct detail_order.*', 'order.*', 'products.*'))
-            ->where('order.status_order_id', 1)
-            ->groupBy('order.id')
-            ->get();
-
-        // untuk notifikasi perlu dicek
-        $order2 = DB::table('detail_order')
-            ->join('order', 'order.id', '=', 'detail_order.order_id')
-            ->join('products', 'products.id', '=', 'detail_order.product_id')
-            ->select(DB::raw('distinct detail_order.*', 'order.*', 'products.*'))
-            ->whereIn('order.status_order_id', [2, 3])
-            ->groupBy('order.id')
-            ->get();
-
-        // untuk notifikasi perlu dikirim
-        $order3 = DB::table('detail_order')
-            ->join('order', 'order.id', '=', 'detail_order.order_id')
-            ->join('products', 'products.id', '=', 'detail_order.product_id')
-            ->select(DB::raw('distinct detail_order.*', 'order.*', 'products.*'))
-            ->where('order.status_order_id', 4)
-            ->groupBy('order.id')
-            ->get();
-
-        // untuk notifikasi barang dikirim
-        $order4 = DB::table('detail_order')
-            ->join('order', 'order.id', '=', 'detail_order.order_id')
-            ->join('products', 'products.id', '=', 'detail_order.product_id')
-            ->select(DB::raw('distinct detail_order.*', 'order.*', 'products.*'))
-            ->where('order.status_order_id', 5)
-            ->groupBy('order.id')
-            ->get();
-
-        $notif1 = count($order1);
-        $notif2 = count($order2);
-        $notif3 = count($order3);
-        $notif4 = count($order4);
-        return [$notif1, $notif2, $notif3, $notif4];
-
-        $totalPem = $notif1 + $notif2 + $notif3 + $notif4;
-    }
 
     public function index()
     {
+        // memanggil fungsi notif dari helpers.php
+        $notifikasi = notif();
         //membawa data produk yang di join dengan table kategori
         $reviews = DB::table('reviews')
             ->join('products', 'products.id', '=', 'reviews.product_id')
@@ -73,8 +29,8 @@ class ReviewController extends Controller
             ->get();
         $data = array(
             'reviews' => $reviews,
-            'notif' => $this->notif(),
-            'totalPem' => $this->notif()[0] + $this->notif()[1] + $this->notif()[2] + $this->notif()[3]
+            'notif' => $notifikasi,
+            'totalPem' => $notifikasi[4]
         );
 
         // return $reviews;
