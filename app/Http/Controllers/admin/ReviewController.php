@@ -39,6 +39,8 @@ class ReviewController extends Controller
 
     public function detail($id)
     {
+        // memanggil fungsi notif dari helpers.php
+        $notifikasi = notif();
         //mengambil detail review produk
         $review = DB::table('reviews')
             ->join(
@@ -66,7 +68,9 @@ class ReviewController extends Controller
             ->first();
         $data = array(
             'review' => $review,
-            'responseReview' => $responseReview
+            'responseReview' => $responseReview,
+            'notif' => $notifikasi,
+            'totalPem' => $notifikasi[4]
         );
         // return $review;
         return view('admin.penilaian.detail', $data);
