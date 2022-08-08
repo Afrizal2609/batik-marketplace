@@ -95,7 +95,9 @@ class TransaksiController extends Controller
             ->first();
         $data = array(
             'detail' => $detail_order,
-            'order'  => $order
+            'order'  => $order,
+            'notif' => $this->notif(),
+            'totalPem' => $this->notif()[0] + $this->notif()[1] + $this->notif()[2] + $this->notif()[3]
         );
         return view('admin.transaksi.detail', $data);
     }
