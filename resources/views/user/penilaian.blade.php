@@ -72,7 +72,7 @@
                         </li>
                         <li>
                           <?php
-                            $user_id = \Auth::user()->id;
+                            $user_id = auth()->user()->id;
                             $total_keranjang = \DB::table('keranjang')
                             ->select(DB::raw('count(id) as jumlah'))
                             ->where('user_id',$user_id)
@@ -85,7 +85,7 @@
                         </li> 
                         <li>
                         <?php
-                            $user_id = \Auth::user()->id;
+                            $user_id = auth()->user()->id;
                             $total_order = \DB::table('order')
                             ->select(DB::raw('count(id) as jumlah'))
                             ->where('user_id',$user_id)

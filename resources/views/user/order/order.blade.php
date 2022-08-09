@@ -26,6 +26,7 @@
                 <th class="product-thumbnail">Invoice</th>
                 <th class="product-name">Total</th>
                 <th class="product-price">Status</th>
+                <th class="product-price" width="20%">Bayar Sebelum</th>
                 <th class="product-quantity" width="20%">Aksi</th>
                 </tr>
             </thead>
@@ -36,6 +37,12 @@
                     <td>{{ $o->invoice }}</td>
                     <td>{{ $o->subtotal + $o->biaya_cod }}</td>
                     <td>{{ $o->status_order_id == 1 ? 'Tunggu konfirmasi pengrajin' :  $o->name}}</td>
+                    <td>
+                        @if($o->status_order_id == 2) {{ Carbon\Carbon::parse ($o->created_at) -> addDays(1)}}
+                        @else
+                            Belum Dikonfirmasi
+                        @endif
+                    </td>
                     <td>
                         @if ($o->status_order_id != 1)
                             <a href="{{ route('user.order.pembayaran',['id' => $o->id]) }}" class="btn btn-success">Bayar</a>      

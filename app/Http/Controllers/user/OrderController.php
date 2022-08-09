@@ -10,8 +10,10 @@ use App\Order;
 use App\Detailorder;
 use App\Rekening;
 use App\Review;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
+
 
 class OrderController extends Controller
 {
@@ -19,14 +21,23 @@ class OrderController extends Controller
     public function index()
     {
         //menampilkan semua data pesanan
-        $user_id = \Auth::user()->id;
+        $user_id = auth()->user()->id;
 
         $order = DB::table('order')
             ->join('status_order', 'status_order.id', '=', 'order.status_order_id')
             ->select('order.*', 'status_order.name')
-            ->where('order.status_order_id', 1)
-            ->orWhere('order.status_order_id', 2)
-            ->where('order.user_id', $user_id)->get();
+            ->where('order.user_id', $user_id)
+            ->whereIn('order.status_order_id', [1, 2])
+            ->get();
+
+        foreach ($order as $key => $value) {
+            if ($value->status_order_id == 2 && $value->created_at < Carbon::now()->subMinutes(1)) {
+                DB::table('order')
+                    ->where('id', $value->id)
+                    ->update(['status_order_id' => 7]);
+            }
+        }
+
         $dicek = DB::table('order')
             ->join('status_order', 'status_order.id', '=', 'order.status_order_id')
             ->select('order.*', 'status_order.name')
@@ -35,6 +46,7 @@ class OrderController extends Controller
             ->Where('order.status_order_id', '!=', 6)
             ->Where('order.status_order_id', '!=', 7)
             ->where('order.user_id', $user_id)->get();
+
         $histori = DB::table('order')
             ->join('status_order', 'status_order.id', '=', 'order.status_order_id')
             ->select('order.*', 'status_order.name')
@@ -139,7 +151,7 @@ class OrderController extends Controller
         //untuk menyimpan pesanan ke table order
         $cek_invoice = DB::table('order')->where('invoice', $request->invoice)->count();
         if ($cek_invoice < 1) {
-            $userid = \Auth::user()->id;
+            $userid = auth()->user()->id;
             //jika pelanggan memilih metode trf maka insert data yang ini
             if ($request->metode_pembayaran == 'trf') {
                 Order::create([
@@ -252,12 +264,12 @@ class OrderController extends Controller
     {
         //mengambil detail review produk
         $review = DB::table('reviews')
-        ->join(
-            'products',
-            'products.id',
-            '=',
-            'reviews.product_id'
-        )
+            ->join(
+                'products',
+                'products.id',
+                '=',
+                'reviews.product_id'
+            )
             ->join('order', 'order.id', '=', 'reviews.order_id')
             ->join('users', 'users.id', '=', 'order.user_id')
             ->select('products.name as product_name', 'users.id as user_id', 'users.name as user_name', 'order.id as order_id', 'order.invoice', 'reviews.*', 'reviews.review as penilaian')
@@ -265,12 +277,12 @@ class OrderController extends Controller
             ->first();
 
         $responseReview = DB::table('response_review')
-        ->join(
-            'reviews',
-            'reviews.id',
-            '=',
-            'response_review.review_id'
-        )
+            ->join(
+                'reviews',
+                'reviews.id',
+                '=',
+                'response_review.review_id'
+            )
             ->join('users', 'users.id', '=', 'response_review.user_id')
             ->select('response_review.*', 'users.name as user_name')
             ->where('response_review.review_id', $id)

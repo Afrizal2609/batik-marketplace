@@ -12,7 +12,7 @@ class KeranjangController extends Controller
 
     public function index()
     {
-        $id_user = \Auth::user()->id;
+        $id_user = auth()->user()->id;
         $keranjangs = DB::table('keranjang')
             ->join('users', 'users.id', '=', 'keranjang.user_id')
             ->join('products', 'products.id', '=', 'keranjang.products_id')
@@ -44,7 +44,7 @@ class KeranjangController extends Controller
     }
     public function update(Request $request)
     {
-        if ($request->id !=0) {
+        if ($request->id != 0) {
             $index = 0;
             foreach ($request->id as $id) {
                 $keranjang = Keranjang::findOrFail($id);
@@ -52,8 +52,7 @@ class KeranjangController extends Controller
                 $keranjang->save();
                 $index++;
             }
-        }  
-        else{
+        } else {
             return redirect()->route('user.keranjang');
         }
         return redirect()->route('user.keranjang');

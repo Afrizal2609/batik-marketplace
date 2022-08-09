@@ -44,7 +44,7 @@
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">@csrf</form>
                   </div>&nbsp&nbsp&nbsp&nbsp&nbsp
                   <?php
-                     $user_id = \Auth::user()->id;
+                     $user_id = auth()->user()->id;
                     $total_keranjang = \DB::table('keranjang')
                     ->select(DB::raw('count(id) as jumlah'))
                     ->where('user_id',$user_id)
@@ -55,7 +55,7 @@
                     <span style= "color:white" class="count">{{ $total_keranjang->jumlah }}</span>
                   </a>&nbsp&nbsp&nbsp&nbsp&nbsp
                   <?php
-                    $user_id = \Auth::user()->id;
+                    $user_id = auth()->user()->id;
                     $total_order = \DB::table('order')
                     ->select(DB::raw('count(id) as jumlah'))
                     ->where('user_id',$user_id)
