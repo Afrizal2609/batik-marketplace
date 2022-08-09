@@ -31,7 +31,7 @@ class OrderController extends Controller
             ->get();
 
         foreach ($order as $key => $value) {
-            if ($value->status_order_id == 2 && $value->created_at < Carbon::now()->subMinutes(1)) {
+            if ($value->status_order_id == 2 && $value->created_at < Carbon::now()->subDays(1)) {
                 DB::table('order')
                     ->where('id', $value->id)
                     ->update(['status_order_id' => 7]);
