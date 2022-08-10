@@ -42,7 +42,11 @@
                                 <td>{{ $order->nama_pemesan }}</td>
                                 <td>{{ $order->subtotal + $order->biaya_cod }}</td>
                                 <td>{{ $order->metode_pembayaran }}</td>
-                                <td>{{ $order->name }}</td>
+                                <td>@if($order->name == 'Tunggu Konfirmasi') Konfirmasi Sebelum <br> {{ Carbon\Carbon::parse ($order->created_at) -> addDays(1)}}
+                                    @else
+                                        {{ $order->name}}
+                                    @endif
+                                </td>
                                 <td align="center">
                             <div>
                               <div class="btn-group" role="group" aria-label="Basic example">

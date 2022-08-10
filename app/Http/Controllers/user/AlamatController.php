@@ -65,7 +65,7 @@ class AlamatController extends Controller
         Alamat::create([
             'cities_id' => $request->cities_id,
             'detail'    => $request->detail,
-            'user_id'   => \Auth::user()->id
+            'user_id'   => auth()->user()->id
         ]);
 
         return redirect()->route('user.alamat');

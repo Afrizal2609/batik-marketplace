@@ -17,7 +17,7 @@ class TransaksiController extends Controller
     public function index()
     {
         // memanggil fungsi notif dari helpers.php
-        $notifikasi = notif();
+        $notifikasi = notifAdmin();
         //ambil data order yang status nya 1 atau masih baru/belum melalukan pembayaran
         $order = DB::table('order')
             ->join('status_order', 'status_order.id', '=', 'order.status_order_id')
@@ -37,7 +37,7 @@ class TransaksiController extends Controller
     public function detail($id)
     {
         // memanggil fungsi notif dari helpers.php
-        $notifikasi = notif();
+        $notifikasi = notifAdmin();
         //ambil data detail order sesuai id
         $detail_order = DB::table('detail_order')
             ->join('products', 'products.id', '=', 'detail_order.product_id')
@@ -63,7 +63,7 @@ class TransaksiController extends Controller
     public function perludicek()
     {
         // memanggil fungsi notif dari helpers.php
-        $notifikasi = notif();
+        $notifikasi = notifAdmin();
         //ambil data order yang status nya 2 atau belum di cek / sudah bayar
         $order = DB::table('order')
             ->join('status_order', 'status_order.id', '=', 'order.status_order_id')
@@ -84,7 +84,7 @@ class TransaksiController extends Controller
     public function perludikirim()
     {
         // memanggil fungsi notif dari helpers.php
-        $notifikasi = notif();
+        $notifikasi = notifAdmin();
         //ambil data order yang status nya 4 sudah dicek dan perlu dikirim(yang sudah di input no resi)
         $order = DB::table('order')
             ->join('status_order', 'status_order.id', '=', 'order.status_order_id')
@@ -104,7 +104,7 @@ class TransaksiController extends Controller
     public function selesai()
     {
         // memanggil fungsi notif dari helpers.php
-        $notifikasi = notif();
+        $notifikasi = notifAdmin();
         //ambil data order yang status nya 6 barang sudah diterima pelangan
         $order = DB::table('order')
             ->join('status_order', 'status_order.id', '=', 'order.status_order_id')
@@ -124,7 +124,7 @@ class TransaksiController extends Controller
     public function dibatalkan()
     {
         // memanggil fungsi notif dari helpers.php
-        $notifikasi = notif();
+        $notifikasi = notifAdmin();
         //ambil data order yang status nya 7 dibatalkan pelanngan
         $order = DB::table('order')
             ->join('status_order', 'status_order.id', '=', 'order.status_order_id')
@@ -144,7 +144,7 @@ class TransaksiController extends Controller
     public function dikirim()
     {
         // memanggil fungsi notif dari helpers.php
-        $notifikasi = notif();
+        $notifikasi = notifAdmin();
         //ambil data order yang status nya 5 atau sedang dikirim
         $order = DB::table('order')
             ->join('status_order', 'status_order.id', '=', 'order.status_order_id')

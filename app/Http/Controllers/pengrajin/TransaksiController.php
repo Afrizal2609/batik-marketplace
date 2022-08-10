@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Order;
+use Carbon\Carbon;
 
 class TransaksiController extends Controller
 {
@@ -42,6 +43,16 @@ class TransaksiController extends Controller
                 unset($order[$key]);
             }
         }
+
+        // membuat waktu pembatalan otomatis Konfirmasi
+        foreach ($order as $key => $value) {
+            if ($value->status_order_id == 1 && $value->created_at < Carbon::now()->subDays(1)) {
+                DB::table('order')
+                    ->where('id', $value->id)
+                    ->update(['status_order_id' => 7]);
+            }
+        }
+
         $data = array(
             'orderbaru' => $order,
             'notif' => $notifikasi,

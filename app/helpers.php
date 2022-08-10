@@ -35,6 +35,58 @@ function notif()
             ->join('products', 'products.id', '=', 'detail_order.product_id')
             ->select(DB::raw('distinct detail_order.*', 'order.*', 'products.*'))
             ->where('order.status_order_id', 1)
+            ->where('products.pengrajin_id', auth()->user()->id)
+            ->groupBy('order.id')
+            ->get();
+
+        // untuk notifikasi perlu dicek
+        $order2 = DB::table('detail_order')
+            ->join('order', 'order.id', '=', 'detail_order.order_id')
+            ->join('products', 'products.id', '=', 'detail_order.product_id')
+            ->select(DB::raw('distinct detail_order.*', 'order.*', 'products.*'))
+            ->where('products.pengrajin_id', auth()->user()->id)
+            ->whereIn('order.status_order_id', [2, 3])
+            ->groupBy('order.id')
+            ->get();
+
+        // untuk notifikasi perlu dikirim
+        $order3 = DB::table('detail_order')
+            ->join('order', 'order.id', '=', 'detail_order.order_id')
+            ->join('products', 'products.id', '=', 'detail_order.product_id')
+            ->select(DB::raw('distinct detail_order.*', 'order.*', 'products.*'))
+            ->where('products.pengrajin_id', auth()->user()->id)
+            ->where('order.status_order_id', 4)
+            ->groupBy('order.id')
+            ->get();
+
+        // untuk notifikasi barang dikirim
+        $order4 = DB::table('detail_order')
+            ->join('order', 'order.id', '=', 'detail_order.order_id')
+            ->join('products', 'products.id', '=', 'detail_order.product_id')
+            ->select(DB::raw('distinct detail_order.*', 'order.*', 'products.*'))
+            ->where('products.pengrajin_id', auth()->user()->id)
+            ->where('order.status_order_id', 5)
+            ->groupBy('order.id')
+            ->get();
+
+        $notif1 = count($order1);
+        $notif2 = count($order2);
+        $notif3 = count($order3);
+        $notif4 = count($order4);
+        $totalPem = $notif1 + $notif2 + $notif3 + $notif4;
+        return [$notif1, $notif2, $notif3, $notif4, $totalPem];
+
+        
+    }
+
+    function notifAdmin()
+    {
+        // untuk notifikasi pesanan baru
+        $order1 = DB::table('detail_order')
+            ->join('order', 'order.id', '=', 'detail_order.order_id')
+            ->join('products', 'products.id', '=', 'detail_order.product_id')
+            ->select(DB::raw('distinct detail_order.*', 'order.*', 'products.*'))
+            ->where('order.status_order_id', 1)
             ->groupBy('order.id')
             ->get();
 
@@ -72,5 +124,4 @@ function notif()
         $totalPem = $notif1 + $notif2 + $notif3 + $notif4;
         return [$notif1, $notif2, $notif3, $notif4, $totalPem];
 
-        
     }

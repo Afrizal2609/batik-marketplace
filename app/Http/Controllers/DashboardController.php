@@ -22,7 +22,7 @@ class DashboardController extends Controller
     public function index()
     {
         // memanggil fungsi notif dari helpers.php
-        $notifikasi = notif();
+        $notifikasi = notifAdmin();
         //ambil data data untuk ditampilkan di card pada dashboard
         $pendapatan = DB::table('order')
             ->select(DB::raw('SUM(subtotal) as penghasilan'))
