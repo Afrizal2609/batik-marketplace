@@ -17,7 +17,7 @@ class PengaturanController extends Controller
     public function aturalamat()
     {
         // memanggil fungsi notif dari helpers.php
-        $notifikasi = notif();
+        $notifikasi = notifAdmin();
 
         $data['notif'] = $notifikasi;
         $data['totalPem'] = $notifikasi[4];

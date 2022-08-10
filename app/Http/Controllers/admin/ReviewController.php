@@ -18,7 +18,7 @@ class ReviewController extends Controller
     public function index()
     {
         // memanggil fungsi notif dari helpers.php
-        $notifikasi = notif();
+        $notifikasi = notifAdmin();
         //membawa data produk yang di join dengan table kategori
         $reviews = DB::table('reviews')
             ->join('products', 'products.id', '=', 'reviews.product_id')
@@ -40,7 +40,7 @@ class ReviewController extends Controller
     public function detail($id)
     {
         // memanggil fungsi notif dari helpers.php
-        $notifikasi = notif();
+        $notifikasi = notifAdmin();
         //mengambil detail review produk
         $review = DB::table('reviews')
             ->join(

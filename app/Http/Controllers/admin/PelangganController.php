@@ -16,7 +16,7 @@ class PelangganController extends Controller
     public function index()
     {
         // memanggil fungsi notif dari helpers.php
-        $notifikasi = notif();
+        $notifikasi = notifAdmin();
         //ambil data pelanggan yang di join dengan table alamat, city,dan province
         $data = array(
             'pelanggan' => DB::table('users')

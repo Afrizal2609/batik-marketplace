@@ -17,7 +17,7 @@ class RekeningController extends Controller
     public function index()
     {
         // memanggil fungsi notif dari helpers.php
-        $notifikasi = notif();
+        $notifikasi = notifAdmin();
         //mengambil data no rekening
         $data = array(
             'rekening' => Rekening::all(),

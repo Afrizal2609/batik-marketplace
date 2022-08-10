@@ -17,7 +17,7 @@ class ReportsController extends Controller
     public function index(Request $request)
     {
         // memanggil fungsi notif dari helpers.php
-        $notifikasi = notif();
+        $notifikasi = notifAdmin();
         //untuk kueri penjualan harian per pengrajin
         $queryMode = true;
 
@@ -103,7 +103,7 @@ class ReportsController extends Controller
     public function monthly(Request $request)
     {
         // memanggil fungsi notif dari helpers.php
-        $notifikasi = notif();
+        $notifikasi = notifAdmin();
         //untuk kueri penjualan harian per pengrajin
         $queryMode = true;
 
@@ -200,7 +200,7 @@ class ReportsController extends Controller
     public function daily(Request $request)
     {
         // memanggil fungsi notif dari helpers.php
-        $notifikasi = notif();
+        $notifikasi = notifAdmin();
         //untuk kueri penjualan harian per pengrajin
         $queryMode = true;
 
