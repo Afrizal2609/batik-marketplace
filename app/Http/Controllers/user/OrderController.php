@@ -30,6 +30,7 @@ class OrderController extends Controller
             ->whereIn('order.status_order_id', [1, 2])
             ->get();
 
+        // membuat waktu pembatalan otomatis
         foreach ($order as $key => $value) {
             if ($value->status_order_id == 2 && $value->created_at < Carbon::now()->subDays(1)) {
                 DB::table('order')
