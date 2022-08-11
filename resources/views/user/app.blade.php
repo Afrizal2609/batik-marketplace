@@ -28,8 +28,8 @@
     <div class="container">
       <div class="d-flex flex-row" style="margin-bottom:0; margin-top:10px; height:40px">
             @if (Route::has('login'))
-                    @auth
-                <div class="dropdown">
+                @auth
+                <div class="dropdown" >
                   <a class="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style= "color:white">
                     <span class="icon icon-person" style= "color:white"></span>
                   </a>
@@ -43,6 +43,7 @@
                     </a>
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">@csrf</form>
                   </div>&nbsp&nbsp&nbsp&nbsp&nbsp
+                </div>
                   <?php
                      $user_id = auth()->user()->id;
                     $total_keranjang = \DB::table('keranjang')
@@ -50,10 +51,12 @@
                     ->where('user_id',$user_id)
                     ->first();
                   ?>
+            
                   <a href="{{ route('user.keranjang') }}" class="site-cart">
-                    <span class="icon icon-add_shopping_cart" style= "color:white"></span>
-                    <span style= "color:white" class="count">{{ $total_keranjang->jumlah }}</span>
+                   <span class="icon icon-add_shopping_cart" style= "color:white"></span>
+                   <span style= "color:white" class="count">{{ $total_keranjang->jumlah }}</span>
                   </a>&nbsp&nbsp&nbsp&nbsp&nbsp
+
                   <?php
                     $user_id = auth()->user()->id;
                     $total_order = \DB::table('order')
@@ -63,10 +66,39 @@
                     ->where('status_order_id','!=',6)
                     ->first();
                   ?>
+
                   <a href="{{ route('user.order') }}" class="site-cart">
                     <span class="icon icon-shopping_cart" style= "color:white"></span>
                     <span style= "color:white" class="count">{{ $total_order->jumlah }} </span>
                   </a>
+
+                  <div class="d-inline-block d-md-none ml-md-0 col-sm">
+                      <a href="#" class="site-menu-toggle js-menu-toggle">
+                        <div class="dropdown" style="width:50px; margin:0px">
+                          <a class="btn btn-secondary dropdown-toggle" role="button" data-toggle="dropdown" aria-expanded="false">
+                            Ξ
+                          </a>
+                          <div class="dropdown-menu " style="width: 50px; margin:0;">
+                            <li class="nav-item {{ Request::path() === '/' ? '' : '' }}">
+                              <a class="nav-link" href="{{ route('home') }}" style= "color:black"><strong>Beranda</strong></a>
+                            </li>
+                            <li class="nav-item {{ Request::path() === 'produk' ? '' : '' }}">
+                              <a class="nav-link" href="{{ route('user.produk') }}" style= "color:black"><strong>Produk</strong></a>
+                            </li>
+                            <li class="nav-item {{ Request::path() === '/' ? '' : '' }}">
+                              <a class="nav-link" href="{{ url('tentang') }}" style= "color:black"><strong>About Us</strong></a>
+                            </li>
+                          </div>
+                        </div> 
+                        <div class="col-6 order-2 order-md-1 site-search-icon text-right">
+                          <form action="{{ route('user.produk.cari') }}" method="get" class="site-block-top-search" >
+                            @csrf
+                            <span class="icon icon-search2"></span>
+                            <input type="text" class="form-control border-0" name="cari" placeholder="Cari">
+                          </form>
+                        </div>
+                      </a>
+                  </div>
                   @else 
                     <div class="dropdown col-sm">
                       <a class="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style= "color:white">
@@ -98,8 +130,8 @@
                           </div>
                         </div> 
                       </a>
-                    @endauth
-                </div>
+                    </div>
+                @endauth
             @endif   
           </div>
         </div>
@@ -130,6 +162,7 @@
         </ul>
       </div>
     </div>
+</div>
   </nav>
   <br><br>    
   <!--navigation-->
